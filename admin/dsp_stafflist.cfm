@@ -1,5 +1,5 @@
 <cfquery name="q_getStaff" datasource="claims_dev">
-    SELECT iUSID, vaUSName, siROLE
+    SELECT iUSID, vaUSID, vaUSName, vaDept, vaDesignation
     FROM SEC0001
     WHERE siROLE IN (30)
     ORDER BY vaUSName
@@ -24,6 +24,7 @@
             <tr>
                 <th>Username</th>
                 <th>Full Name</th>
+                <th>Department</th>
                 <th>Role</th>
                 <th>Actions</th>
             </tr>
@@ -31,9 +32,10 @@
         <tbody>
             <cfoutput query="q_getStaff">
                 <tr>
-                    <td>#iUSID#</td>
+                    <td>#vaUSID#</td>
                     <td>#vaUSName#</td>
-                    <td>#siROLE#</td>
+                    <td>#vaDept#</td>
+                    <td>#vaDesignation#</td>
                     <td class="d-flex gap-2">
                         <!-- Edit button -->
                         <form action="index.cfm?fusebox=admin&fuseaction=dsp_upsertstaff&iUSID=#iUSID#" method="post" style="display:inline;">

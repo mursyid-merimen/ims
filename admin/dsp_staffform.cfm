@@ -2,11 +2,13 @@
 <cfparam name="attributes.isEdit" default="false">
 <cfparam name="attributes.staff" default="#structNew()#">
 
+<cfset vausid      = (attributes.isEdit and StructKeyExists(attributes.staff, "vaUSID"))       ? attributes.staff.vaUSID       : "">
 <cfset vausname     = (attributes.isEdit and StructKeyExists(attributes.staff, "vausname"))     ? attributes.staff.vausname     : "">
 <cfset iusid   = (attributes.isEdit and StructKeyExists(attributes.staff, "iusid"))   ? attributes.staff.iusid   : "">
 <cfset vaemail      = (attributes.isEdit and StructKeyExists(attributes.staff, "vaemail"))      ? attributes.staff.vaemail      : "">
 <cfset vadepartment = (attributes.isEdit and StructKeyExists(attributes.staff, "vadepartment")) ? attributes.staff.vadepartment : "">
 <cfset sirole       = (attributes.isEdit and StructKeyExists(attributes.staff, "sirole"))       ? attributes.staff.sirole       : "">
+<cfset vadesignation = (attributes.isEdit and StructKeyExists(attributes.staff, "vadesignation")) ? attributes.staff.vadesignation : "">
 
 <script>
 var request=new Object();
@@ -46,8 +48,8 @@ function TestLocale(obj)
       
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input id="username" name="username" type="text" class="form-control" CHKREQUIRED CHKNAME="Username"
-                value="#iusid#">
+            <input id="username" name="username" type="text" class="form-control" Onblur="DoReq(this)" CHKREQUIRED CHKNAME="Username"
+                value="#vausid#">
         </div>
 
         <div class="mb-3">
@@ -65,22 +67,30 @@ function TestLocale(obj)
         </div>
 
         <div class="mb-3">
-            <label for="department" class="form-label">Department</label>
-            <input id="department" name="department" type="text" class="form-control" CHKREQUIRED CHKNAME="Department"
-                value="#vadepartment#">
+            <label for="department" class="form-label">Department</label>            
+            <select id="department" name="department" class="form-select" CHKREQUIRED CHKNAME="Department">
+                <option value="">-- Select Department --</option>
+                <cfloop array="#['Claims','E-Policy','IT','Integration','RnD']#" index="p">
+                    <option value="#p#" <cfif attributes.isEdit AND StructKeyExists(attributes.staff, "vadepartment") and attributes.staff.vadepartment eq p>selected</cfif>>#p#</option>
+                </cfloop>
+            </select>
         </div>
 
         <div class="mb-3">
-            <label for="role" class="form-label">Role</label>
-            <input id="role" name="role" type="text" class="form-control" CHKREQUIRED CHKNAME="Role"
-                value="#sirole#">
+            <label for="role" class="form-label">Role</label>            
+            <select id="designation" name="designation" class="form-select" CHKREQUIRED CHKNAME="Role">
+                <option value="">-- Select Role --</option>
+                <cfloop array="#['Staff','IT','Admin']#" index="p">
+                    <option value="#p#" <cfif attributes.isEdit AND StructKeyExists(attributes.staff, "vadepartment") and attributes.staff.vadesignation eq p>selected</cfif>>#p#</option>
+                </cfloop>
+            </select>
         </div>
 
 
         <input type="button" value="<cfif attributes.isEdit>Update Staff<cfelse>Submit</cfif>" 
             onclick="if(FormVerify(document.all('staffForm'))) document.staffForm.submit();" 
             class="btn btn-<cfif attributes.isEdit>warning<cfelse>primary</cfif> w-100">
-    </form>
+    </form> 
 </div>
 </cfoutput>
 

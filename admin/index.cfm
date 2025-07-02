@@ -24,9 +24,9 @@
         <cfinvoke component="ims.admin.index" method="dsp_form">
         <CFMODULE TEMPLATE="..\footer.cfm">
     </CFCASE>
-    <CFCASE VALUE="act_upsertrecord">
+    <CFCASE VALUE="act_upsertstaff">
         <CFMODULE TEMPLATE="..\header.cfm">
-        <cfinvoke component="ims.admin.index" method="act_upsertrecord">
+        <cfinvoke component="ims.admin.index" method="act_upsertstaff">
         <CFMODULE TEMPLATE="..\footer.cfm">
     </CFCASE>
     <CFCASE VALUE="dsp_upsertstaff">

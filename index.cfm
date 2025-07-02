@@ -5,7 +5,7 @@
 <cfparam NAME="attributes.FUSEACTION" DEFAULT="">
 
 
-<cfif NOT ListFindNoCase("dsp_login,act_login,act_logout,dsp_forgotpass", fuseaction)>
+<cfif NOT ListFindNoCase("dsp_login,act_login,act_logout,dsp_forgotpass,dsp_custregister", fuseaction)>
 	<cftry>
 		<cfset Request.DS.FN.SVCsessionChk()>
 	<cfcatch type="any">

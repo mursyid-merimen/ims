@@ -27,6 +27,10 @@
 		<CFMODULE template="dsp_upsertstaff.cfm" >
 		<CFRETURN>
 	</cffunction>
+	<cffunction name="act_upsertstaff" hint="">
+		<CFMODULE template="act_upsertstaff.cfm" >
+		<CFRETURN>
+	</cffunction>
 
 	<cffunction name="dsp_stafflist" hint="">
 		<CFMODULE template="dsp_stafflist.cfm" >
