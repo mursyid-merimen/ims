@@ -223,6 +223,6 @@ BY          ON          REMARKS
 	<CFSET LOC="#HLOC#lastlogon=#modresult.lastlogon#&lastlogout=#modresult.lastlogout#">
 	<CFLOCATION URL="#request.webroot#index.cfm?fusebox=SVCsec&fuseaction=dsp_sesslogout_msg&redirect=#UrlEncodedFormat(LOC)#&#Request.MToken#" ADDTOKEN="no">
 <cfelse>
-	<CFLOCATION URL="#request.webroot##HLOC#" ADDTOKEN="no">
+	<CFLOCATION URL="#request.webroot##HLOC##Request.MToken#&wel=1" ADDTOKEN="no">
 </CFIF>
 	

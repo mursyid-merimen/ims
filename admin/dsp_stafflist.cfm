@@ -1,9 +1,14 @@
 <cfquery name="q_getStaff" datasource="claims_dev">
     SELECT iUSID, vaUSID, vaUSName, vaDept, vaDesignation
     FROM SEC0001
-    WHERE siROLE IN (30)
+    WHERE iCOID IN (1)
     ORDER BY vaUSName
 </cfquery>
+
+<cfdump var="#session#">
+
+<cfset Attributes.COID = 1>
+
 
 
 
@@ -38,12 +43,12 @@
                     <td>#vaDesignation#</td>
                     <td class="d-flex gap-2">
                         <!-- Edit button -->
-                        <form action="index.cfm?fusebox=admin&fuseaction=dsp_upsertstaff&iUSID=#iUSID#" method="post" style="display:inline;">
+                        <form action="index.cfm?fusebox=admin&fuseaction=dsp_upsertstaff&COID=#Attributes.COID#&#Request.MToken#&USERID=#vaUSID#" method="post" style="display:inline;">
                             <button type="submit" class="btn btn-sm btn-primary">Edit</button>
                         </form>
 
                         <!-- Delete button -->
-                        <form action="index.cfm?fusebox=admin&fuseaction=act_deletestaff&iUSID=#iUSID#" method="post" style="display:inline;" onsubmit="return confirm('Delete this staff?');">
+                        <form action="index.cfm?fusebox=admin&fuseaction=act_deletestaff&#Request.MToken#&iUSID=#iUSID#" method="post" style="display:inline;" onsubmit="return confirm('Delete this staff?');">
                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                         </form>
                     </td>

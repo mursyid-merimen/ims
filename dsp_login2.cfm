@@ -15,7 +15,7 @@ REVISION HISTORY
 BY          ON          REMARKS
 =========   ==========  ======================================================================================
 --->
-<!--- <cfdump var="#request.ds.co#" label="Application" abor	 --->
+
 <cfif IsDefined("SESSION.VARS")>
   <cfif IsDefined("SESSION.VARS.MACID")>
     <cfif Not IsDefined("COOKIE.MACID") OR (SESSION.VARS.MACID IS NOT COOKIE.MACID)>

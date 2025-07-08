@@ -6,7 +6,7 @@
     </CFCASE>
     <CFCASE VALUE="dsp_home">
         <CFMODULE TEMPLATE="..\header.cfm">
-        <cfinvoke component="ims.admin.index" method="dsp_home">
+        <cfinvoke component="ims.admin.index" method="dsp_home" ArgumentCollection="#Attributes#">
         <CFMODULE TEMPLATE="..\footer.cfm">
     </CFCASE>
     <CFCASE VALUE="act_deleterecord">
@@ -26,17 +26,23 @@
     </CFCASE>
     <CFCASE VALUE="act_upsertstaff">
         <CFMODULE TEMPLATE="..\header.cfm">
-        <cfinvoke component="ims.admin.index" method="act_upsertstaff">
+        <cfinvoke component="ims.admin.index" method="act_upsertstaff" ArgumentCollection="#Attributes#">
         <CFMODULE TEMPLATE="..\footer.cfm">
     </CFCASE>
     <CFCASE VALUE="dsp_upsertstaff">
         <CFMODULE TEMPLATE="..\header.cfm">
-        <cfinvoke component="ims.admin.index" method="dsp_upsertstaff">
+        <cfinvoke component="ims.admin.index" method="dsp_upsertstaff" ArgumentCollection="#Attributes#">
         <CFMODULE TEMPLATE="..\footer.cfm">
     </CFCASE>
     <CFCASE VALUE="dsp_stafflist">
         <CFMODULE TEMPLATE="..\header.cfm">
-        <cfinvoke component="ims.admin.index" method="dsp_stafflist">
+        <cfinvoke component="ims.admin.index" method="dsp_stafflist" ArgumentCollection="#Attributes#">
+        <CFMODULE TEMPLATE="..\footer.cfm">
+    </CFCASE>
+    <CFCASE VALUE="act_userprofile">
+        <CFMODULE TEMPLATE="..\header.cfm">
+        <cfinvoke component="ims.admin.index" method="act_userprofile" ArgumentCollection="#Attributes#">
         <CFMODULE TEMPLATE="..\footer.cfm">
     </CFCASE>
 </cfswitch>
+
