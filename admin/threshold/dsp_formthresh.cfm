@@ -36,12 +36,12 @@
 
     <label>Minimum Quantity:</label><br>
     <input type="number" name="nMINQTY" step="1"
-        value="<cfif StructKeyExists(q_get, 'nMINQTY')>#q_get.nMINQTY#</cfif>"
+        value="<cfif StructKeyExists(q_get, 'nMINQTY')>#NumberFormat(q_get.nMINQTY, "9")#</cfif>"
         required><br><br>
 
     <label>Maximum Quantity:</label><br>
     <input type="number" name="nMAXQTY" step="1"
-        value="<cfif StructKeyExists(q_get, 'nMAXQTY')>#q_get.nMAXQTY#</cfif>"
+        value="<cfif StructKeyExists(q_get, 'nMAXQTY')>#NumberFormat(q_get.nMAXQTY, "9")#</cfif>"
         required><br><br>
 
     <button type="submit">Save</button>

@@ -22,8 +22,8 @@
     <cfoutput query="q_thresh">
         <tr>
             <td>#vaTYPENAME#</td>
-            <td>#nMINQTY#</td>
-            <td>#nMAXQTY#</td>
+            <td>#NumberFormat(nMINQTY, "9")#</td>
+            <td>#NumberFormat(nMAXQTY, "9")#</td>
     
             <td>
                 <a href="index.cfm?fusebox=admin&fuseaction=dsp_formthresh&THRESHID=#iTHRESHID#&&#Request.MToken#">Edit</a>
