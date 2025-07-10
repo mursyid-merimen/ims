@@ -19,4 +19,8 @@
 	
 	<cfreturn>
 </cffunction>
+	<cffunction name="dsp_home" hint="">
+		<CFMODULE template="dsp_home.cfm"  >
+		<CFRETURN>
+	</cffunction>
 </cfcomponent>

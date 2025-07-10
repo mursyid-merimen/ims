@@ -6,7 +6,7 @@
         WHERE iRecordID = <cfqueryparam value="#url.RecordID#" cfsqltype="cf_sql_integer">
     </cfquery>
 
-    <cflocation url="index.cfm?fusebox=admin&fuseaction=dsp_home" addtoken="no">
+    <cflocation url="index.cfm?fusebox=MTRroot&fuseaction=dsp_home" addtoken="no">
 <cfelse>
     <cfoutput><div class="alert alert-danger">Invalid Record ID</div></cfoutput>
 </cfif>

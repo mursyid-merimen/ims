@@ -14,13 +14,16 @@ sysdt=new Date();
 </script>
 <CFMODULE TEMPLATE="#request.apppath#services/CustomTags/SVCaddfile.cfm" FNAME="JQUERY">
 <CFMODULE TEMPLATE="#request.apppath#services/CustomTags/SVCaddfile.cfm" FNAME="SVCMAIN">
+	<!--- DEBUGGER HERE --->
+<!--- <CFMODULE TEMPLATE="#request.apppath#services/CustomTags/SVCaddfile.cfm" FNAME="SVCCAL"> --->
+<CFMODULE TEMPLATE="#request.apppath#services/CustomTags/SVCaddfile.cfm" FNAME="SVCCSS">
 
 
 
 <!--- Debugger here --->
 <!--- <CFMODULE TEMPLATE="#request.apppath#services/CustomTags/SVCaddfile.cfm" FNAME="SVCCAL"> --->
-<!--- 
-<CFMODULE TEMPLATE="#request.apppath#services/CustomTags/SVCaddfile.cfm" FNAME="SVCCSS"> --->
+
+<!--- <CFMODULE TEMPLATE="#request.apppath#services/CustomTags/SVCaddfile.cfm" FNAME="SVCCSS"> --->
 
 <!--- <cfmodule TEMPLATE="#request.apppath#services/CustomTags/SVCADDFILE.cfm" FNAME="SVCMAIN"> --->
 	<!--- <cfmodule TEMPLATE="#request.apppath#services/CustomTags/SVCADDFILE.cfm" FNAME="TOOLBAR"> --->
@@ -172,6 +175,7 @@ FROM_COTYPEID:<cfdump var="#FROM_COTYPEID#"><br>
 ORGTYPE:<cfdump var="#SESSION.VARS.ORGTYPE#"><br>
 iUSID:<cfdump var="#Attributes.IUSID#"><br>
 MODE:<cfdump var="#mode#"><br>
+LI_COTYPe:<cfdump var="#q_co.siCOTYPEID#"><br>
 </cfoutput>
 
 
@@ -528,6 +532,9 @@ function SubmitEntry(val)
 
 <form action="#request.webroot#index.cfm?fusebox=admin&fuseaction=act_userprofile#urlparam#&#Request.MTOKEN#"  enctype="multipart/form-data" method=post name=UserInfo>
 	<cfmodule TEMPLATE="#request.apppath#services/CustomTags\SVCchkguid.cfm" START>
+	<input type="button" 
+	value="<cfif mode EQ 1>Update Staff<cfelse>Create Staff</cfif>" 
+		onclick="SubmitEntry(1);">
 	<table class=clsClmTable align=center style=WIDTH:90%>
 	<col style=font-weight:bold;width:50ex>
 	<tr class=header><td colspan=2>#Server.SVClang("USER PROFILE",2265)# - #ls_CONAME#</td></tr>
@@ -582,8 +589,13 @@ function SubmitEntry(val)
 		</script>
 	</cfif--->
 
-	<td>#Server.SVClang("Name*",2275)#</td>
-	<td><input CHKREQUIRED name=USName value="#HTMLEditFormat(vaUSNAME)#" type=Text maxlength=100 size=50 onblur=DoReq(this)></td></tr
+	<script>
+JSVCSetIDDefStr("#Request.DS.LOCALES[session.vars.LOCID].IDDEF#");
+document.write(JSVCGenNameIDStr(new Array("<b>"+JSVClang("Name*",2275)+"</b>","<b>"+JSVClang("Identification",7467)+"</b>","<b>"+JSVClang("Second ID",6030)+"</b>"),1,3,"USR",0,2,1,"#REQUEST.DS.FN.SVCSanitizeInput(VAUSNAME,"JS-NQ")#",0,<cfif mode is 1>"#siID1TYPE#"<cfelse>0</cfif>,"#REQUEST.DS.FN.SVCSanitizeInput(vaID1,"JS-NQ")#",0,<cfif mode is 1>"#siID2TYPE#"<cfelse>0</cfif>,"#REQUEST.DS.FN.SVCSanitizeInput(vaID2,"JS-NQ")#",null,null,null));
+</script>
+
+	<!--- <td>#Server.SVClang("Name*",2275)#</td>
+	<td><input CHKREQUIRED name=USName value="#HTMLEditFormat(vaUSNAME)#" type=Text maxlength=100 size=50 onblur=DoReq(this)></td></tr --->
 
 	<!--- If 2FA is active --->
 	<cfif bitAnd(q_co.hq_iPWDSTRENGTHMASK,8192) IS 8192>
@@ -668,10 +680,10 @@ function SubmitEntry(val)
 		</cfoutput>
 	</cfif>
 
-	<tr><td><b>#Server.SVClang("Role*",2276)#</b></td>
+	<tr ><td><b>#Server.SVClang("Role*",2276)#</b></td>
 		<td><select CHKREQUIRED name=ROLE>
 			<cfquery name=q_role datasource=#Request.MTRDSN#>
-			SELECT siROLE,vaDESC from SEC0002 WHERE siCOTYPEID=<cfqueryparam value="#li_cotypeid#" cfsqltype="CF_SQL_NUMERIC">
+			SELECT siROLE,vaDESC from SEC0002 WHERE siCOTYPEID=<cfqueryparam value="#li_cotypeid#" cfsqltype="CF_SQL_NUMERIC"> AND vaDESC IN ('Administrator', 'Staff')
 			</cfquery>
 			<cfloop query=q_role><option value=#siRole#<CFIF siRole IS q_user.siROLE> SELECTED</CFIF>>#vaDESC#</cfloop>
 			</select></td></tr>
@@ -715,7 +727,7 @@ function SubmitEntry(val)
 
 	<!-- mike -->
 	<cfif li_cotypeid IS 2 OR li_cotypeid IS 3 OR li_cotypeid IS 4>
-		<tr><td><b>#Server.SVClang("Approval Limit*",2280)#</b></td>
+		<tr style="display: none;"><td><b>#Server.SVClang("Approval Limit*",2280)#</b></td>
 		<td><input CHKREQUIRED value="#Request.DS.FN.SVCnum(mnAPPLIMIT)#" type=text name=AppLimit size=15 maxlength=15 onblur=SetApprvLimit(this)> <i>#Server.SVClang("(-1 if unlimited)",2281)#</i></td>
 		</tr>
 	</cfif>
@@ -724,7 +736,7 @@ function SubmitEntry(val)
 	--->
 
 	<cfif mode IS 1>
-		<tr><td><b>#Server.SVClang("User End Date",0)#</b></td>
+		<tr style="display: none;"><td><b>#Server.SVClang("User End Date",0)#</b></td>
 			<td>	<input <CFIF siSTATUS IS 1>DISABLED</CFIF> MRMOBJ=CALDATE name="sleUSRENDDT" DTMIN="#q_co.DATECREATED#"
 						value="#Request.DS.FN.SVCdtDBtoLOC(q_co.DATEEND)#"
 						onblur="ObjDate(this);">
@@ -732,13 +744,13 @@ function SubmitEntry(val)
 
 					</td>
 		</tr>
-		<tr><td><b>#Server.SVClang("Status",1352)#</b></td>
+		<tr style="display: none;"><td><b>#Server.SVClang("Status",1352)#</b></td>
 		<td><select CHKREQUIRED name="Status" size="1">
 			<option value=0<CFIF siSTATUS IS 0> SELECTED</CFIF>>#Server.SVClang("ACTIVE",2010)#<option value=1<CFIF siSTATUS IS 1> SELECTED</CFIF>>#Server.SVClang("DELETED",2011)#</select>
 		</td></tr>
 	</CFIF>
 
-		<tr><td><b>#Server.SVClang("Access Type",8487)#</b></td><td>
+		<tr style="display: none;"><td><b>#Server.SVClang("Access Type",8487)#</b></td><td>
 		<CFIF siUSRACCTYPE IS "0" OR siUSRACCTYPE IS "">
 			<CFSET USRACCTYPE=4>
 		<CFELSE>
@@ -821,7 +833,7 @@ function SubmitEntry(val)
 	</cfif>
 
 
-	<tr><td><b>#Server.SVClang("Child Company Access",2284)#</b></td>
+	<tr style="display: none;"><td><b>#Server.SVClang("Child Company Access",2284)#</b></td>
 	<td><select CHKREQUIRED name=ICHILDCOACCESS><option VALUE=0>#Server.SVClang("No",1311)#<option VALUE=1<CFIF ICHILDCOACCESS IS 1> SELECTED</CFIF>>#Server.SVClang("Yes",1310)#</select>
 	</td></tr>
 
@@ -1242,28 +1254,48 @@ function SubmitEntry(val)
 	permgrplist="" permgrpnotlist="#PERMGRPNOTLIST#" preselectlist="#PRESELECTLIST#" permdislist="#permdislist#" permhidlist="#permhidlist#" permuntick=#permuntick#>
 	
 	
-	<input type="button" 
+	<!--- <input type="button" 
 	value="<cfif mode EQ 1>Update Staff<cfelse>Create Staff</cfif>" 
 		onclick="SubmitEntry(1);">
-		
+		 --->
 		
 		
 	</FORM>
 	
 
 
-<!--- set invisible and check/uncheck with js --->
-<!--- <script>
-	document.getElementById("PerChk_306").checked = true;
-	</script> 
-<style>
-    #PERMTABLE {
-        display: none;
+<!--- set invisible unused field and check/uncheck admin with js --->
+<script>
+	document.getElementsByName("AppLimit")[0].value = "-1";
+	function updatePermissionCheckbox() {
+    const roleSelect = document.getElementsByName("ROLE")[0];
+    const selectedText = roleSelect.options[roleSelect.selectedIndex].text;
+    const permissionCheckbox = document.getElementById("PerChk_306");
+
+    if (selectedText === "Administrator") {
+        permissionCheckbox.checked = true;
+    } else {
+        permissionCheckbox.checked = false;
     }
+	}
+
+	// Run when page loads
+	window.addEventListener("DOMContentLoaded", updatePermissionCheckbox);
+
+	// Run when role dropdown changes
+	document.getElementsByName("ROLE")[0].addEventListener("change", updatePermissionCheckbox);
+</script> 
+<style>	 
+    /* #PERMTABLE {
+        display: none;
+    } */
 		.clsDocBody {
 			display: none;
 		}
-</style> --->
+		#TRINSUREDDTL2, #TRINSUREDDTL3{
+			display: none;
+		}
+</style>
 
 
 

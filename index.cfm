@@ -98,6 +98,18 @@
 	</CFIF>
 </CFIF>
 
+<!--- GLOBAL CHECK --->
+<!--- <cfif Len(attributes.FUSEACTION) GT 0 AND ListFindNoCase("dsp_home", attributes.fuseaction)>
+  <cftry>
+    <CFSET Request.DS.FN.SVCsessionChk()>
+    <cfcatch type="any">
+      <cfset structClear(session)>
+      <cflocation url="index.cfm" addtoken="no">
+    </cfcatch>
+  </cftry>
+</cfif> --->
+
+
 <cfswitch expression="#attributes.fusebox#">
     <cfcase value="admin">
         <cfinclude template="admin/index.cfm">
@@ -108,6 +120,11 @@
 		<cfcase value="MTRroot">
 			<cfparam NAME="attributes.FUSEACTION" DEFAULT="">
 				<cfswitch EXPRESSION=#attributes.fuseaction#>
+					<CFCASE VALUE="dsp_home">
+						<CFMODULE TEMPLATE="header.cfm">
+						<cfinvoke component="ims.index" method="dsp_home">
+						<CFMODULE TEMPLATE="footer.cfm">
+					</CFCASE>
 					<cfdefaultcase>
 						<cfif Application.APPLOCID IS 5>
 							<cfinvoke component="ims.index" method="dsp_login" ArgumentCollection=#Attributes#>

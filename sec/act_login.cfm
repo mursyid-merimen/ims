@@ -182,9 +182,9 @@ BY          ON          REMARKS
 			<CFIF returncode LT 0>
 				<CFTHROW TYPE=EX_DBERROR ErrorCode="FSEC/CHECKAUDITAGREEMENT(#returncode#)">
 			</CFIF>
-			<CFIF returncode LTE 0>
+			<!--- <CFIF returncode LTE 0>
 				<cfset hloc="index.cfm?fusebox=SVCsec&fuseaction=dsp_pdpa_agree"&PREFBR&"&">
-			</CFIF>
+			</CFIF> --->
 		</CFIF>
 	</CFIF>
 
@@ -200,7 +200,7 @@ BY          ON          REMARKS
 	<CFELSEIF isDefined("session.vars.BLOCKLOGIN") AND SESSION.VARS.BLOCKLOGIN IS 1>
 		<cfset hloc="index.cfm?fusebox=SVCbill&fuseaction=dsp_viewinvoice&COROLE=1&DOMAINID=23"&PREFBR&"&">
 	<cfelse>
-		<cfset hloc="index.cfm?fusebox=admin&fuseaction=dsp_home"&PREFBR&"&">
+		<cfset hloc="index.cfm?fusebox=MTRroot&fuseaction=dsp_home"&PREFBR&"&">
 	</cfif>
 </CFIF>
 

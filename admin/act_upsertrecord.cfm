@@ -29,7 +29,7 @@
 
     <!--- Redirect or show message based on result --->
     <cfif cfstoredproc.StatusCode EQ 1>
-        <cflocation url="index.cfm?fusebox=admin&fuseaction=dsp_home" addtoken="no">
+        <cflocation url="index.cfm?fusebox=MTRroot&fuseaction=dsp_home" addtoken="no">
     <cfelse>
         <cfoutput><div class="alert alert-danger">Error: Record was not saved.</div></cfoutput>
     </cfif>

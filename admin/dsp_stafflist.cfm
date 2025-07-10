@@ -12,7 +12,7 @@
 
 
 
-<!DOCTYPE = html>
+<!--- <!DOCTYPE = html>
 <html lang="en">  
   <head>
     <meta charset="UTF-8">
@@ -20,9 +20,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   </head>
-  <body>
+  <body> --->
     
-    <div class="container mt-4">
+    <!--- <div class="container mt-4"> --->
         <h2>Staff List</h2>
         <table class="table table-bordered table-striped mx-auto w-auto">
         <thead>
@@ -43,7 +43,7 @@
                     <td>#vaDesignation#</td>
                     <td class="d-flex gap-2">
                         <!-- Edit button -->
-                        <form action="index.cfm?fusebox=admin&fuseaction=dsp_upsertstaff&COID=#Attributes.COID#&#Request.MToken#&USERID=#vaUSID#" method="post" style="display:inline;">
+                        <form action="index.cfm?fusebox=admin&fuseaction=dsp_upsertstaff&COID=#Attributes.COID#&#Request.MToken#&iUSID=#iUSID#" method="post" style="display:inline;">
                             <button type="submit" class="btn btn-sm btn-primary">Edit</button>
                         </form>
 
@@ -56,9 +56,9 @@
             </cfoutput>
         </tbody>
     </table>
-    </div>
+    <!--- </div>
     
 
   </body> 
-</html>
+</html> --->
 

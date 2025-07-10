@@ -135,7 +135,7 @@
         .then(data => {
             // Handle success response
             console.log('Success:', data);
-            window.location.href = 'index.cfm?fusebox=admin&fuseaction=dsp_home';
+            window.location.href = 'index.cfm?fusebox=MTRroot&fuseaction=dsp_home';
         })
         .catch((error) => {
             console.error('Error:', error);
