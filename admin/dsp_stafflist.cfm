@@ -1,9 +1,17 @@
 <cfquery name="q_getStaff" datasource="claims_dev">
-    SELECT iUSID, vaUSID, vaUSName, vaDept, vaDesignation
-    FROM SEC0001
-    WHERE iCOID IN (1)
-    ORDER BY vaUSName
+    SELECT 
+        u.iUSID,
+        u.vaUSID,
+        u.vaUSName,
+        u.siRole,
+        r.vaDESC 
+    FROM SEC0001 u
+    LEFT JOIN SEC0002 r ON u.siRole = r.siROLE
+    WHERE u.iCOID = 1
+    ORDER BY u.vaUSName
 </cfquery>
+
+
 
 <cfdump var="#session#">
 
@@ -29,7 +37,7 @@
             <tr>
                 <th>Username</th>
                 <th>Full Name</th>
-                <th>Department</th>
+                <!--- <th>Department</th> --->
                 <th>Role</th>
                 <th>Actions</th>
             </tr>
@@ -39,8 +47,8 @@
                 <tr>
                     <td>#vaUSID#</td>
                     <td>#vaUSName#</td>
-                    <td>#vaDept#</td>
-                    <td>#vaDesignation#</td>
+                    <!--- <td>#vaDept#</td> --->
+                    <td>#vaDESC#</td>
                     <td class="d-flex gap-2">
                         <!-- Edit button -->
                         <form action="index.cfm?fusebox=admin&fuseaction=dsp_upsertstaff&COID=#Attributes.COID#&#Request.MToken#&iUSID=#iUSID#" method="post" style="display:inline;">

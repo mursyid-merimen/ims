@@ -1,19 +1,19 @@
-<cfparam name="iITEMID" default="">
+<cfparam name="ITEMID" default="">
 <cfset q_get = QueryNew("")>
 
-<cfif iITEMID NEQ "">
+<cfif ITEMID NEQ "">
     <cfquery name="q_get" datasource="#request.MTRDSN#">
-        SELECT * FROM IMS_ITEMS WHERE iITEMID = <cfqueryparam value="#iITEMID#" cfsqltype="cf_sql_integer">
+        SELECT * FROM IMS_ITEMS WHERE iITEMID = <cfqueryparam value="#ITEMID#" cfsqltype="cf_sql_integer">
     </cfquery>
 </cfif>
 
 <cfquery name="q_types" datasource="#request.MTRDSN#">
-    SELECT iTYPEID, vaTYPENAME FROM IMS_TYPES WHERE siSTATUS = 1 ORDER BY vaTYPENAME
+    SELECT iTYPEID, vaTYPENAME FROM IMS_TYPES WHERE siSTATUS = 0 ORDER BY vaTYPENAME
 </cfquery>
 
 <cfoutput>
-<form action="<cfif iITEMID EQ "">act_add.cfm<cfelse>act_edit.cfm</cfif>" method="post">
-    <input type="hidden" name="iITEMID" value="#iITEMID#">
+<form action="<cfif ITEMID EQ "">index.cfm?fusebox=admin&fuseaction=act_item&#request.mtoken#<cfelse>index.cfm?fusebox=admin&fuseaction=act_item&#request.mtoken#</cfif>" method="post">
+    <input type="hidden" name="iITEMID" value="#ITEMID#">
 
     <label>Name:</label><br>
     <input type="text" name="vaITEMNAME" value="<cfif StructKeyExists(q_get, 'vaITEMNAME')>#q_get.vaITEMNAME#<cfelse></cfif>" required><br><br>

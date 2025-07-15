@@ -1,3 +1,7 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
 <cfparam name="TYPEID" default="">
 <cfset q_get = {}>
 
@@ -9,7 +13,7 @@
 
 
 <cfoutput>
-<form action="<cfif TYPEID EQ "">index.cfm?fusebox=admin&fuseaction=act_addtype&#request.mtoken#<cfelse>index.cfm?fusebox=admin&fuseaction=act_edittype&#request.mtoken#</cfif>" method="post">
+<form action="<cfif TYPEID EQ "">index.cfm?fusebox=admin&fuseaction=act_type&#request.mtoken#<cfelse>index.cfm?fusebox=admin&fuseaction=act_type&#request.mtoken#</cfif>" method="post">
     <input type="hidden" name="iTYPEID" value="#TYPEID#">
 
     <label>Name:</label><br>

@@ -31,8 +31,8 @@
             <td>#vaBRAND# / #vaMODEL#</td>
             <td>#vaLOCATION#</td>
             <td>
-                <a href="index.cfm?fusebox=admin&fuseaction=dsp_formitem&#Request.MToken#&iITEMID=#iITEMID#">Edit</a> |
-                <a href="act_delete.cfm?iITEMID=#iITEMID#" onclick="return confirm('Delete this item?')">Delete</a>
+                <a href="index.cfm?fusebox=admin&fuseaction=dsp_formitem&#Request.MToken#&ITEMID=#iITEMID#">Edit</a> |
+                <a href="index.cfm?fusebox=admin&fuseaction=act_item&#Request.MToken#&ITEMID=#iITEMID#&OPERATION=DELETE" onclick="return confirm('Delete this item?')">Delete</a>
             </td>
         </tr>
     </cfoutput>

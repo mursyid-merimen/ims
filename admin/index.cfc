@@ -48,18 +48,11 @@
 		<CFMODULE template="itemtypes/dsp_formtype.cfm" AttributeCollection=#Arguments#>
 		<CFRETURN>
 	</cffunction>
-	<cffunction name="act_addtype" hint="">
-		<CFMODULE template="itemtypes/act_addtype.cfm" AttributeCollection=#Arguments#>
+	<cffunction name="act_type" hint="">
+		<CFMODULE template="itemtypes/act_type.cfm" AttributeCollection=#Arguments#>
 		<CFRETURN>
 	</cffunction>
-	<cffunction name="act_edittype" hint="">
-		<CFMODULE template="itemtypes/act_edittype.cfm" AttributeCollection=#Arguments#>
-		<CFRETURN>
-	</cffunction>
-	<cffunction name="act_deletetype" hint="">
-		<CFMODULE template="itemtypes/act_deletetype.cfm" AttributeCollection=#Arguments#>
-		<CFRETURN>
-	</cffunction>
+	
 
 	<!--- ITEM --->
 	<cffunction name="dsp_listitem" hint="">
@@ -70,6 +63,11 @@
 		<CFMODULE template="item/dsp_formitem.cfm" AttributeCollection=#Arguments#>
 		<CFRETURN>
 	</cffunction>
+	<cffunction name="act_item" hint="">
+		<CFMODULE template="item/act_item.cfm" AttributeCollection=#Arguments#>
+		<CFRETURN>
+	</cffunction>
+	
 
 	<!--- THRESHOLD --->
 	<cffunction name="dsp_listthresh" hint="">
@@ -82,6 +80,16 @@
 	</cffunction>
 	<cffunction name="act_editthresh" hint="">
 		<CFMODULE template="threshold/act_editthresh.cfm" AttributeCollection=#Arguments#>
+		<CFRETURN>
+	</cffunction>
+
+	<!--- ASSIGN --->
+	<cffunction name="dsp_assign" hint="">
+		<CFMODULE template="assign/dsp_assign.cfm" AttributeCollection=#Arguments#>
+		<CFRETURN>
+	</cffunction>
+	<cffunction name="dsp_listassign" hint="">
+		<CFMODULE template="assign/dsp_listassign.cfm" AttributeCollection=#Arguments#>
 		<CFRETURN>
 	</cffunction>
 </cfcomponent>

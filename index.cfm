@@ -148,5 +148,18 @@
     </cfdefaultcase>
 </cfswitch>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+	a, .navbar, .navbar-brand, .nav-link, .dropdown-item {
+    cursor: pointer !important;
+}
+
+
+</style>
+
+
+
 
 

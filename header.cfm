@@ -52,7 +52,7 @@
 
                     <!-- Staff Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownStaff" role="button"
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownStaff"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Staff
                         </a>
@@ -101,6 +101,20 @@
                                 <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_listthresh&#Request.MToken#">Manage Thresholds</a></li>
                                 <!--- <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_formthresh&#Request.MToken#">Add Threshold</a></li> --->
                             </ul>
+                        </cfoutput>
+                    </li>
+                    <!-- Asset Assignment Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownStaff" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Asset Assignment
+                        </a>
+                        <cfoutput>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownStaff">
+                                <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_listassign&#Request.MToken#">Manage Asset Assignments</a></li>
+                                <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_assign&#Request.MToken#">New Asset Assignments</a></li>
+                            </ul>
+                            
                         </cfoutput>
                     </li>
                 </ul>

@@ -52,21 +52,12 @@
         <cfinvoke component="ims.admin.index" method="dsp_formtype" ArgumentCollection="#Attributes#">
         <CFMODULE TEMPLATE="..\footer.cfm">
     </CFCASE>
-    <CFCASE VALUE="act_addtype">
+    <CFCASE VALUE="act_type">
         <CFMODULE TEMPLATE="..\header.cfm">
-        <cfinvoke component="ims.admin.index" method="act_addtype" ArgumentCollection="#Attributes#">
+        <cfinvoke component="ims.admin.index" method="act_type" ArgumentCollection="#Attributes#">
         <CFMODULE TEMPLATE="..\footer.cfm">
     </CFCASE>
-    <CFCASE VALUE="act_edittype">
-        <CFMODULE TEMPLATE="..\header.cfm">
-        <cfinvoke component="ims.admin.index" method="act_edittype" ArgumentCollection="#Attributes#">
-        <CFMODULE TEMPLATE="..\footer.cfm">
-    </CFCASE>
-    <CFCASE VALUE="act_deletetype">
-        <CFMODULE TEMPLATE="..\header.cfm">
-        <cfinvoke component="ims.admin.index" method="act_deletetype" ArgumentCollection="#Attributes#">
-        <CFMODULE TEMPLATE="..\footer.cfm">
-    </CFCASE>
+    
 
     <!--- ITEM --->
     <CFCASE VALUE="dsp_listitem">
@@ -79,6 +70,12 @@
         <cfinvoke component="ims.admin.index" method="dsp_formitem" ArgumentCollection="#Attributes#">
         <CFMODULE TEMPLATE="..\footer.cfm">
     </CFCASE>
+    <CFCASE VALUE="act_item">
+        <CFMODULE TEMPLATE="..\header.cfm">
+        <cfinvoke component="ims.admin.index" method="act_item" ArgumentCollection="#Attributes#">
+        <CFMODULE TEMPLATE="..\footer.cfm">
+    </CFCASE>
+    
 
     <!--- THRESHOLD --->
     <CFCASE VALUE="dsp_listthresh">
@@ -94,6 +91,18 @@
     <CFCASE VALUE="act_editthresh">
         <CFMODULE TEMPLATE="..\header.cfm">
         <cfinvoke component="ims.admin.index" method="act_editthresh" ArgumentCollection="#Attributes#">
+        <CFMODULE TEMPLATE="..\footer.cfm">
+    </CFCASE>
+
+    <!--- ASSIGN --->
+    <CFCASE VALUE="dsp_assign">
+        <CFMODULE TEMPLATE="..\header.cfm">
+        <cfinvoke component="ims.admin.index" method="dsp_assign" ArgumentCollection="#Attributes#">
+        <CFMODULE TEMPLATE="..\footer.cfm">
+    </CFCASE>
+    <CFCASE VALUE="dsp_listassign">
+        <CFMODULE TEMPLATE="..\header.cfm">
+        <cfinvoke component="ims.admin.index" method="dsp_listassign" ArgumentCollection="#Attributes#">
         <CFMODULE TEMPLATE="..\footer.cfm">
     </CFCASE>
 </cfswitch>
