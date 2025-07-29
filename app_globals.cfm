@@ -29,9 +29,9 @@ BY          ON          REMARKS
 	</cfif--->
 	
 	<cfif StructKeyExists(URL,"TRAIN")>
-		<cfapplication NAME="merimen_train" ScriptProtect="ALL" CLIENTMANAGEMENT=No SETCLIENTCOOKIES=No SESSIONMANAGEMENT=Yes>
+		<cfapplication NAME="ims_train" ScriptProtect="ALL" CLIENTMANAGEMENT=No SETCLIENTCOOKIES=No SESSIONMANAGEMENT=Yes>
 	<cfelse>
-		<cfapplication NAME="merimen" ScriptProtect="ALL" CLIENTMANAGEMENT=No SETCLIENTCOOKIES=YES SESSIONMANAGEMENT=Yes>
+		<cfapplication NAME="ims" ScriptProtect="ALL" CLIENTMANAGEMENT=No SETCLIENTCOOKIES=YES SESSIONMANAGEMENT=Yes>
 	</cfif>
 	<cfset request.MTRfirstcall=0>
 	<CFIF IsDefined("SESSION.VARS.USID")>
@@ -44,8 +44,8 @@ BY          ON          REMARKS
 	<CFELSE>
 		<CFSET request.inSession=0>
 	</CFIF>
-	<cferror Type="Exception" Exception="ANY" TEMPLATE="dsp_error.cfm">
-	<cferror Type="Request" Exception="ANY" TEMPLATE="dsp_errorreq.cfm">
+	<cferror Type="Exception" Exception="ANY" TEMPLATE="dsp_login.cfm">
+	<cferror Type="Request" Exception="ANY" TEMPLATE="dsp_login.cfm">
 	<!--- Uncomment below to reset app vars --->
 	<!---CFLOCK SCOPE=Application Type=Exclusive TimeOut=60>
 		<CFSET Application.Setvars=0>

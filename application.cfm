@@ -1,7 +1,8 @@
 <cfif NOT findNoCase("/index.cfm", cgi.script_name)><cfif StructKeyExists(URL,"CFID")><CFLOCATION URL="index.cfm?CFID=#url.CFID#&CFTOKEN=#url.CFTOKEN#&USID=#url.USID#&RID=#RandRange(1000000,9999999)#" ADDTOKEN="no"><cfelse><CFLOCATION url="index.cfm" ADDTOKEN="no"></cfif></cfif><cfinclude TEMPLATE="app_globals.cfm">
 
 <!--- add hardcode --->
-	<CFSET APPLICATION.DB_MODE = "DEV">
+<CFSET APPLICATION.DB_MODE = "DEV">
+	<CFSET APPLICATION.NAME = "IMS">
 	<CFSET APPLICATION.APPLICATIONNAME = "IMS">
 	<CFSET APPLICATION.MTRDSN = "claims_dev">	
 	<CFSET APPLICATION.MTRPATH = "/ims/">

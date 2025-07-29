@@ -4,6 +4,7 @@ Notes:
 Modification on Submit Entry part - added checking for checked box - Kian Yee - April 2008
 
 --->
+<!--- <cfdump var="#Request.MTRDSN#"> --->
 <script>
 var request=new Object();
 <CFOUTPUT>
@@ -17,6 +18,9 @@ sysdt=new Date();
 	<!--- DEBUGGER HERE --->
 <!--- <CFMODULE TEMPLATE="#request.apppath#services/CustomTags/SVCaddfile.cfm" FNAME="SVCCAL"> --->
 <CFMODULE TEMPLATE="#request.apppath#services/CustomTags/SVCaddfile.cfm" FNAME="SVCCSS">
+<cfmodule TEMPLATE="#request.apppath#services/CustomTags\SVCADDFILE.cfm" FNAME="SVCTOOLBAR">
+	<cfmodule TEMPLATE="#request.apppath#services/CustomTags\SVCADDFILE.cfm" FNAME="SVCCAL">
+
 
 
 
@@ -59,7 +63,7 @@ sysdt=new Date();
 	<cfif Not IsDefined("SESSION.VARS.ORGID")>
 		<cfthrow TYPE="EX_SECFAILED" ErrorCode="NOLOGIN">
 	</cfif>
-	<cfset Attributes.COID=SESSION.VARS.ORGID>
+	<cfset Attributes.COID=13000277>
 </cfif>
 
 
@@ -166,7 +170,7 @@ USER_COTYPEID:<cfdump var="#USER_COTYPEID#"><br>
 </cfif>
 
 
-<cfoutput>
+<!--- <cfoutput>
 <br>
 
 FROM_ICOID:<cfdump var="#FROM_ICOID#"><br>
@@ -176,7 +180,7 @@ ORGTYPE:<cfdump var="#SESSION.VARS.ORGTYPE#"><br>
 iUSID:<cfdump var="#Attributes.IUSID#"><br>
 MODE:<cfdump var="#mode#"><br>
 LI_COTYPe:<cfdump var="#q_co.siCOTYPEID#"><br>
-</cfoutput>
+</cfoutput> --->
 
 
 <cfif USER_IGCOID IS FROM_IGCOID><!--- user from the same gco branch --->
@@ -417,15 +421,15 @@ GenerateMenubar("UserMenu",90);
 <cfif Isdefined("attributes.URLBACK") AND attributes.URLBACK NEQ "">
 	AddToMenubar("UserMenu",JSVClang("<< Back",4781),request.webroot+"#URLDecode(attributes.URLBACK)#&"+request.mtoken);
 <cfelse>
-	AddToMenubar("UserMenu",JSVClang("<< Back (Company Profile)",2196),request.webroot+"index.cfm?fusebox=MTRadmin&fuseaction=dsp_coprofile&COID=#Attributes.FROMCOID#&"+request.mtoken);
+	AddToMenubar("UserMenu",JSVClang("<< Staff List",2196),"index.cfm?fusebox=admin&fuseaction=dsp_stafflist&COID=#Attributes.FROMCOID#&#request.mtoken#");
 </cfif>
-<cfif LOCID IS NOT 5 AND mode IS 1>
+<!--- <cfif LOCID IS NOT 5 AND mode IS 1>
 AddToMenubar("UserMenu",JSVClang("Create Leave",11945),request.webroot+"index.cfm?fusebox=SVCSEC&fuseaction=dsp_createLeave&iusid=#Attributes.IUSID#&userid=#Attributes.USERID#&mode=0&from=MTRAdmin&"+request.mtoken);
-</cfif>
+</cfif> --->
 
-<CFIF ORGTYPE IS "D" and attributes.iusid gt 0>
+<!--- <CFIF ORGTYPE IS "D" and attributes.iusid gt 0>
 AddToMenubar("UserMenu",JSVClang("Change Branch",25138),request.webroot+"index.cfm?fusebox=MTRadmin&fuseaction=dsp_changeBranch&IUSID=#Attributes.IUSID##urlparam#&"+request.mtoken);
-</CFIF>
+</CFIF> --->
 
 <CFIF BITAND(q_co.iPWDSTRENGTHMASK,2048) AND  ORGTYPE IS "D">
 	<CFMODULE TEMPLATE="#request.apppath#services/CustomTags\SVCchkgrp.cfm" GrpList="306R">
@@ -532,9 +536,9 @@ function SubmitEntry(val)
 
 <form action="#request.webroot#index.cfm?fusebox=admin&fuseaction=act_userprofile#urlparam#&#Request.MTOKEN#"  enctype="multipart/form-data" method=post name=UserInfo>
 	<cfmodule TEMPLATE="#request.apppath#services/CustomTags\SVCchkguid.cfm" START>
-	<input type="button" 
+	<!--- <input type="button" 
 	value="<cfif mode EQ 1>Update Staff<cfelse>Create Staff</cfif>" 
-		onclick="SubmitEntry(1);">
+		onclick="SubmitEntry(1);"> --->
 	<table class=clsClmTable align=center style=WIDTH:90%>
 	<col style=font-weight:bold;width:50ex>
 	<tr class=header><td colspan=2>#Server.SVClang("USER PROFILE",2265)# - #ls_CONAME#</td></tr>
@@ -1286,15 +1290,23 @@ document.write(JSVCGenNameIDStr(new Array("<b>"+JSVClang("Name*",2275)+"</b>","<
 	document.getElementsByName("ROLE")[0].addEventListener("change", updatePermissionCheckbox);
 </script> 
 <style>	 
-    /* #PERMTABLE {
-        display: none;
-    } */
+   
 		.clsDocBody {
 			display: none;
 		}
 		#TRINSUREDDTL2, #TRINSUREDDTL3{
 			display: none;
 		}
+
+		body {
+			font-family: var(--bs-body-font-family) !important;
+			font-size: var(--bs-body-font-size) !important;
+			line-height: var(--bs-body-line-height) !important;
+			color: var(--bs-body-color) !important;
+			background-color: var(--bs-body-bg) !important;
+		}
+
+
 </style>
 
 

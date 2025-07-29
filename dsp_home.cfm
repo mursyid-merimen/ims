@@ -1,7 +1,7 @@
 <cfmodule TEMPLATE="/services/CustomTags\SVCDISABLEDIRECT.cfm" Path="#GetCurrentTemplatePath()#">
 
 <!--- <cfdump var="#Attributes#"> --->
-<cfdump var="#session#" label="Session Variables">
+<!--- <cfdump var="#session#" label="Session Variables"> --->
 <cfset Attributes.USID=Session.VARS.USID>
 
 
@@ -55,26 +55,155 @@
 <cfset Attributes.COID=1>
 
 
+<cfquery name="q_dashboard" datasource="#Request.MTRDSN#">
+    SELECT 
+        t.iTYPEID,
+        t.vaTYPENAME,
+        th.nMINQTY,
+        th.nMAXQTY,
+        COUNT(i.iITEMID) AS ItemCount
+    FROM 
+        IMS_TYPES t
+    LEFT JOIN 
+        IMS_THRESH th ON t.iTYPEID = th.iTYPEID AND th.siSTATUS = 0
+    LEFT JOIN 
+        IMS_ITEMS i ON t.iTYPEID = i.iTYPEID AND i.siSTATUS = 0
+		WHERE 
+				t.siSTATUS = 0
+    GROUP BY 
+        t.iTYPEID, t.vaTYPENAME, th.nMINQTY, th.nMAXQTY
+    ORDER BY 
+        t.vaTYPENAME
+</cfquery>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Inventory Management System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap 5 CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        input[readonly] {
-            background-color: #f8f9fa;
-        }
-    </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0/dist/chartjs-plugin-annotation.min.js"></script>
+
+
+
 </head>
 <body>
+
+    <h2>Inventory Threshold Overview</h2>
+
+    <style>
+      .chart-grid {
+        display: inline-block;
+        width: 32%;
+        margin: 0.5%;
+        vertical-align: top;
+      }
+
+      .chart-row {
+        display: flex;
+        justify-content: center;
+        margin: 0.5%;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+      }
+    </style>
+
+    <cfset chartCounter = 0>
+
+    <cfoutput query="q_dashboard">
+      <!--- Start new row every 3 charts --->
+      <cfif chartCounter MOD 3 EQ 0>
+        <div class="chart-row">
+      </cfif>
+
+      <div class="chart-grid">
+        <h4>#vaTYPENAME#</h4>
+        <canvas id="chart_#iTYPEID#" ></canvas>
+      </div>
+
+      <!--- End row after 3rd chart --->
+      <cfif chartCounter MOD 3 EQ 2 OR q_dashboard.currentRow EQ q_dashboard.recordCount>
+        </div>
+      </cfif>
+
+      <cfset chartCounter = chartCounter + 1>
+    </cfoutput>
+
+
+    <script>
+      <cfoutput query="q_dashboard">
+        const ctx_#iTYPEID# = document.getElementById('chart_#iTYPEID#').getContext('2d');
+
+        const itemCount_#iTYPEID# = [#ItemCount#];
+        const minThreshold_#iTYPEID# = #nMINQTY#;
+        const maxThreshold_#iTYPEID# = #nMAXQTY#;
+
+        new Chart(ctx_#iTYPEID#, {
+          type: 'bar',
+          data: {
+            labels: ['#vaTYPENAME#'],
+            datasets: [{
+              label: 'Item Count',
+              data: itemCount_#iTYPEID#,
+              backgroundColor: 'rgba(54, 162, 235, 0.8)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: 'Item Usage vs Threshold'
+              },
+              annotation: {
+                annotations: {
+                  maxLine: {
+                    type: 'line',
+                    yMin: maxThreshold_#iTYPEID#,
+                    yMax: maxThreshold_#iTYPEID#,
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 2,
+                    label: {
+                      content: 'Max Threshold',
+                      enabled: true,
+                      position: 'end'
+                    }
+                  },
+                  minLine: {
+                    type: 'line',
+                    yMin: minThreshold_#iTYPEID#,
+                    yMax: minThreshold_#iTYPEID#,
+                    borderColor: 'rgb(75, 192, 192)',
+                    borderWidth: 2,
+                    label: {
+                      content: 'Min Threshold',
+                      enabled: true,
+                      position: 'end'
+                    }
+                  }
+                }
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                suggestedMax: Math.max(itemCount_#iTYPEID#[0], minThreshold_#iTYPEID#, maxThreshold_#iTYPEID#) + 10
+              }
+            }
+          }
+        });
+        </cfoutput>
+
+    </script>
     
-<cfdump var="#Attributes#">  
 
 </body>
 </html>
+
+
+
+
 
 
 

@@ -18,7 +18,7 @@
 
     <!--- Call the upsert stored procedure --->
     <cfstoredproc procedure="sspStaffDataUpsert"
-                  datasource="claims_dev"
+                  datasource="#Request.MTRDSN#"
                   returncode="yes">
 
         <!-- primary key -->

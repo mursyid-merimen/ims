@@ -6,6 +6,17 @@
 	<cfset Request.DS.FN.SVClangSet("",5)><!--- Similar settings in \CustomTags\settoken.cfm and \index.cfm --->
 </cfif>
 
+<!--- check sessiong --->
+<cfif Len(attributes.FUSEACTION) GT 0 AND NOT ListFindNoCase("dsp_login,act_login,dsp_terms", attributes.FUSEACTION)>
+  <cftry>
+    <CFSET Request.DS.FN.SVCsessionChk()>
+    <cfcatch type="any">
+      <cfset structClear(session)>
+      <cflocation url="index.cfm" addtoken="no">
+    </cfcatch>
+  </cftry>
+</cfif>
+
 <cfif isDefined("Attributes.UID") AND NOT StructKeyExists(SESSION,"SSO_UID") AND Attributes.FUSEACTION NEQ "act_login">
 	<!--- Check if needed to recreate session, else show timeout error --->
 	<cfmodule template="#Request.SSOPATH#?FUSEBOX=MRMRoot&ENVIRONMENT=1&MODE=2&#REQUEST.MTOKEN#">

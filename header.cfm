@@ -1,13 +1,23 @@
 
 <cfset attributes.COID = 1>
 
+
+<!--- find user and role to hide path --->
 <cfquery name="q_users" datasource="#Request.MTRDSN#">
-    SELECT vaUSID
-    FROM SEC0001 WITH (NOLOCK)
-    WHERE iUSID = <cfqueryparam value="#Session.VARS.USID#" cfsqltype="cf_sql_integer">
+    SELECT 
+        u.vaUSID,
+        u.siROLE,
+        r.siROLE,
+        r.vaDESC
+
+    FROM SEC0001 u WITH (NOLOCK)
+    LEFT JOIN SEC0002 r ON u.siROLE = r.siROLE
+    WHERE u.iCOID = <cfqueryparam value="#attributes.COID#" cfsqltype="CF_SQL_INTEGER">
+    AND iUSID = <cfqueryparam value="#session.vars.USID#" cfsqltype="cf_sql_integer">
 </cfquery>
+<cfmodule TEMPLATE="#Request.LOGPATH#CustomTags\ADDFILE.cfm" FNAME="MERI">
 
-
+<!--- <cfdump var="#q_users#" label="User Info" format="html" abort="no"> --->
 
 <!DOCTYPE html>
 <html lang="en">    
@@ -18,8 +28,8 @@
     <!-- ✅ Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- Optional: Your custom styles -->
-    <link rel="stylesheet" href="/assets/css/override.css?v=20250708">
+    <!-- Bootstrap Table CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.css">
 </head>
 <body>
 
@@ -51,19 +61,21 @@
                     -->
 
                     <!-- Staff Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownStaff"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Staff
-                        </a>
-                        <cfoutput>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownStaff">
-                                <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_stafflist&#Request.MToken#">Manage Staff</a></li>
-                                <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_upsertstaff&COID=#Attributes.COID#&#Request.MToken#">Add Staff</a></li>
-                                <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_upsertstaff&COID=#Attributes.COID#&#Request.MToken#&USERID=#q_users.vaUSID#">Edit My Profile</a></li>
-                            </ul>
-                        </cfoutput>
-                    </li>
+                    <cfif q_users.vaDESC IS "Administrator">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownStaff"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Staff
+                            </a>
+                            <cfoutput>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownStaff">
+                                    <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_stafflist&#Request.MToken#">Manage Staff</a></li>
+                                    <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_upsertstaff&COID=#attributes.coid#&#Request.MToken#">Add Staff</a></li>
+                                    <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_upsertstaff&COID=#attributes.coid#&#Request.MToken#&USERID=#q_users.vaUSID#">Edit My Profile</a></li>
+                                </ul>
+                            </cfoutput>
+                        </li>
+                    </cfif>
                     <!-- Item Types Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownStaff" role="button"
@@ -112,11 +124,30 @@
                         <cfoutput>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownStaff">
                                 <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_listassign&#Request.MToken#">Manage Asset Assignments</a></li>
-                                <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_assign&#Request.MToken#">New Asset Assignments</a></li>
+                                <!--- <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_assign&#Request.MToken#">New Asset Assignments</a></li> --->
                             </ul>
                             
                         </cfoutput>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownStaff" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Report
+                        </a>
+                        <cfoutput>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownStaff">
+                                <li>
+                                    <a class="nav-link" href="index.cfm?fusebox=admin&fuseaction=dsp_rptItem&#request.mtoken#">Report Items</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" href="index.cfm?fusebox=admin&fuseaction=dsp_rptAsgmt&#request.mtoken#">Report Asset Assignmet</a>
+                                </li>
+                                <!--- <li><a class="dropdown-item" href="index.cfm?fusebox=admin&fuseaction=dsp_assign&#Request.MToken#">New Asset Assignments</a></li> --->
+                            </ul>
+                            
+                        </cfoutput>
+                    </li>
+                    
                 </ul>
                 
 
@@ -132,5 +163,7 @@
 
     <!-- ✅ Bootstrap JS Bundle (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Table JS -->
+    <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
 </body>
 </html>
