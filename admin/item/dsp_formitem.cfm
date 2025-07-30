@@ -63,6 +63,16 @@ function TestLocale(obj)
 
         <input type="hidden" name="iITEMID" value="#ITEMID#">
 
+        <!-- Tag -->
+        <div class="mb-3">
+            <label for="vaTAG" class="form-label">Tag (Unique)</label>
+            <input type="text" class="form-control" id="vaTAG" name="vaTAG" 
+                    CHKREQUIRED CHKNAME="Tag"
+                    onblur="DoReq(this);"
+                    value="<cfif StructKeyExists(q_get, 'vaTAG')>#q_get.vaTAG#<cfelse></cfif>"
+                    >
+        </div>
+
         <!-- Item Name -->
         <div class="mb-3">
             <label for="vaITEMNAME" class="form-label">Item Name</label>
@@ -135,15 +145,7 @@ function TestLocale(obj)
                     >
         </div>
 
-        <!-- Tag -->
-        <div class="mb-3">
-            <label for="vaTAG" class="form-label">Tag</label>
-            <input type="text" class="form-control" id="vaTAG" name="vaTAG" 
-                    CHKREQUIRED CHKNAME="Tag"
-                    onblur="DoReq(this);"
-                    value="<cfif StructKeyExists(q_get, 'vaTAG')>#q_get.vaTAG#<cfelse></cfif>"
-                    >
-        </div>
+        
 
         <!-- Purchase Date -->
         <div class="mb-3">

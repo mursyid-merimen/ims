@@ -71,7 +71,7 @@
     <cfif cfstoredproc.StatusCode EQ 1>
         <cflocation url="index.cfm?fusebox=admin&fuseaction=dsp_listitem&#Request.MToken#">
     <cfelse>
-        <cfoutput><div class="alert alert-danger">Error: Item could not be saved or deleted.</div></cfoutput>
+        <cfthrow TYPE="EX_DBERROR" ErrorCode="DBERROR">
     </cfif>
 
 <cfelse>

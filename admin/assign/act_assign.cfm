@@ -1,7 +1,7 @@
 <cfparam name="form.operation" default="">
 <cfset operation = ucase(trim(form.operation))>
-<cfdump var="#form#">
-<cfdump var="#Application.TMPDIR#">
+<!--- <cfdump var="#form#">
+<cfdump var="#Application.TMPDIR#"> --->
 <!--- <cfabort> --->
 
 <!-- Validation -->
@@ -52,7 +52,7 @@
     <cfif cfstoredproc.statusCode EQ 1>
         <cflocation url="index.cfm?fusebox=admin&fuseaction=dsp_listassign&#Request.MToken#">
     <cfelse>
-        <cfoutput><div class="alert alert-danger">Failed to assign asset.</div></cfoutput>
+        <cfthrow TYPE="EX_DBERROR" ErrorCode="DBERROR">
     </cfif>
 
 <cfelseif operation EQ "RETURN" AND structKeyExists(form, "iASGMTID")>
@@ -91,7 +91,7 @@
     <cfif cfstoredproc.statusCode EQ 1>
         <cflocation url="index.cfm?fusebox=admin&fuseaction=dsp_listassign&#Request.MToken#">
     <cfelse>
-        <cfoutput><div class="alert alert-danger">Failed to mark asset as returned.</div></cfoutput>
+        <cfthrow TYPE="EX_DBERROR" ErrorCode="DBERROR">
     </cfif>
 
 <cfelse>

@@ -7,14 +7,18 @@
 </cfif>
 
 <!--- check sessiong --->
-<cfif Len(attributes.FUSEACTION) GT 0 AND NOT ListFindNoCase("dsp_login,act_login,dsp_terms", attributes.FUSEACTION)>
+<cfif Len(attributes.FUSEACTION) GT 0 
+    AND NOT ListFindNoCase("dsp_login,act_login,dsp_terms,act_userprofile", attributes.FUSEACTION)
+    AND NOT Left(attributes.FUSEBOX, 3) EQ "svc">
+    
   <cftry>
-    <CFSET Request.DS.FN.SVCsessionChk()>
+    <cfset Request.DS.FN.SVCsessionChk()>
     <cfcatch type="any">
       <cfset structClear(session)>
       <cflocation url="index.cfm" addtoken="no">
     </cfcatch>
   </cftry>
+
 </cfif>
 
 <cfif isDefined("Attributes.UID") AND NOT StructKeyExists(SESSION,"SSO_UID") AND Attributes.FUSEACTION NEQ "act_login">

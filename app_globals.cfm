@@ -44,8 +44,8 @@ BY          ON          REMARKS
 	<CFELSE>
 		<CFSET request.inSession=0>
 	</CFIF>
-	<cferror Type="Exception" Exception="ANY" TEMPLATE="dsp_login.cfm">
-	<cferror Type="Request" Exception="ANY" TEMPLATE="dsp_login.cfm">
+	<cferror Type="Exception" Exception="ANY" TEMPLATE="dsp_error.cfm">
+	<cferror Type="Request" Exception="ANY" TEMPLATE="dsp_errorreq.cfm">
 	<!--- Uncomment below to reset app vars --->
 	<!---CFLOCK SCOPE=Application Type=Exclusive TimeOut=60>
 		<CFSET Application.Setvars=0>

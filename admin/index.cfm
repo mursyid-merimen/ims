@@ -1,5 +1,38 @@
 <!--- <cfdump var="#attributes#"> --->
-<cfdump var="#attributes#" label="Attributes" abort="no">
+<cfset attributes.COID = 1>
+<!--- find user and role to hide path --->
+<cfquery name="q_users" datasource="#Request.MTRDSN#">
+    SELECT 
+        u.vaUSID,
+        u.siROLE,
+        r.siROLE,
+        r.vaDESC
+
+    FROM SEC0001 u WITH (NOLOCK)
+    LEFT JOIN SEC0002 r ON u.siROLE = r.siROLE
+    WHERE u.iCOID = <cfqueryparam value="#attributes.COID#" cfsqltype="CF_SQL_INTEGER">
+    AND iUSID = <cfqueryparam value="#session.vars.USID#" cfsqltype="cf_sql_integer">
+</cfquery>
+
+<!--- Set isAdmin flag --->
+<cfset isAdmin = (trim(q_users.vaDESC) EQ "Administrator")>
+
+<!--- List of fuseactions that only admin can access --->
+<cfset adminOnlyFuseactions = "act_upsertstaff,dsp_upsertstaff,dsp_stafflist,act_userprofile,act_deletestaff">
+<!--- <cfoutput>
+<pre>
+fuseaction: #fuseaction#
+isAdmin: #isAdmin#
+q_users.recordCount: #q_users.recordCount#
+roleDesc: #q_users.roleDesc#
+</pre>
+</cfoutput> --->
+
+<!--- If fuseaction is admin-only and user is not admin, deny access --->
+<cfif ListFindNoCase(adminOnlyFuseactions, fuseaction) AND NOT isAdmin>
+    <cfthrow TYPE="EX_SECFAILED" ErrorCode="CANNOTWRITE">
+</cfif>
+
 <CFSWITCH expression="#fuseaction#">
 
     <CFCASE VALUE="act_upsertstaff">
@@ -27,6 +60,10 @@
         <cfinvoke component="ims.admin.index" method="act_deletestaff" ArgumentCollection="#Attributes#">
         <CFMODULE TEMPLATE="..\footer.cfm">
     </CFCASE>
+    
+        
+
+    
     
 
     <!--- TYPE --->
